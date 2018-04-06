@@ -1,0 +1,36 @@
+{
+    "name": "putyourlightson/craft-amazon-ses",
+    "description": "Amazon SES mailer adapter for Craft CMS.",
+    "version": "1.0.0",
+    "type": "craft-plugin",
+    "homepage": "https://github.com/putyourlightson/craft-amazon-ses",
+    "license": "MIT",
+    "keywords": [
+        "craft",
+        "cms",
+        "craftcms",
+        "email"
+    ],
+    "require": {
+        "craftcms/cms": "^3.0.1"
+    },
+    "autoload": {
+        "psr-4": {
+          "putyourlightson\\amazonses\\": "src/"
+        }
+    },
+    "support": {
+        "docs": "https://github.com/putyourlightson/craft-amazon-ses",
+        "source": "https://github.com/putyourlightson/craft-amazon-ses",
+        "issues": "https://github.com/putyourlightson/craft-amazon-ses/issues"
+    },
+    "extra": {
+        "name": "Amazon SES",
+        "handle": "amazon-ses",
+        "developer": "PutYourLightsOn",
+        "developerUrl": "https://www.putyourlightson.net/",
+        "schemaVersion": "1.0.0",
+        "changelogUrl": "https://raw.githubusercontent.com/putyourlightson/craft-amazon-ses/v1/CHANGELOG.md",
+        "class": "putyourlightson\\amazonses\\AmazonSes"
+    }
+}
