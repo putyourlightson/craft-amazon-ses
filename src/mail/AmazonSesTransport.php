@@ -7,7 +7,6 @@
 namespace putyourlightson\amazonses\mail;
 
 use Aws\Ses\SesClient;
-use yii\mail\BaseMessage;
 
 /**
  * Amazon SES Transport
