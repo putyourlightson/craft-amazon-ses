@@ -1,6 +1,6 @@
 <?php
 /**
- * @link      https://craftcampaign.com
+ * @link      https://github.com/putyourlightson/craft-amazon-ses
  * @copyright Copyright (c) PutYourLightsOn
  */
 

@@ -1,6 +1,6 @@
 <?php
 /**
- * @link      https://craftcampaign.com
+ * @link      https://github.com/putyourlightson/craft-amazon-ses
  * @copyright Copyright (c) PutYourLightsOn
  */
 
@@ -8,9 +8,7 @@ namespace putyourlightson\amazonses\mail;
 
 use Craft;
 use craft\mail\transportadapters\BaseTransportAdapter;
-use Http\Adapter\Guzzle6\Client;
-use putyourlightson\amazonses\AmazonSes;
-use Swift_Events_SimpleEventDispatcher;
+use Aws\Ses\SesClient;
 
 /**
  * Amazon SES Adapter
@@ -18,6 +16,8 @@ use Swift_Events_SimpleEventDispatcher;
  * @author    PutYourLightsOn
  * @package   Amazon SES
  * @since     1.0.0
+ *
+ * @property mixed $settingsHtml
  */
 
 class AmazonSesAdapter extends BaseTransportAdapter
@@ -66,16 +66,6 @@ class AmazonSesAdapter extends BaseTransportAdapter
     public $apiSecret;
 
     /**
-     * @var int The send rate to use
-     */
-    public $sendRate = 1;
-
-    /**
-     * @var int The timeout duration (in seconds)
-     */
-    public $timeout = 10;
-
-    /**
      * @var string The SES API version to use
      */
     private $_version = 'latest';
@@ -84,11 +74,6 @@ class AmazonSesAdapter extends BaseTransportAdapter
      * @var bool Debug mode
      */
     private $_debug = false;
-
-    /**
-     * @var SesClient|null
-     */
-    private $_client;
 
     // Public Methods
     // =========================================================================
@@ -99,8 +84,8 @@ class AmazonSesAdapter extends BaseTransportAdapter
     public function attributeLabels(): array
     {
         return [
-            'apiKey' => Craft::t('mailgun', 'API Key'),
-            'domain' => Craft::t('mailgun', 'Domain'),
+            'apiKey' => 'API Key',
+            'apiSecret' => 'API Secret',
         ];
     }
 
@@ -112,7 +97,6 @@ class AmazonSesAdapter extends BaseTransportAdapter
         return [
             [['region', 'apiKey', 'apiSecret', 'sendRate', 'timeout'], 'required'],
             [['region'], 'in', 'range' => array_keys($this->getRegionOptions())],
-            [['sendRate', 'timeout'], 'number', 'integerOnly' => true],
         ];
     }
 
@@ -121,7 +105,7 @@ class AmazonSesAdapter extends BaseTransportAdapter
      */
     public function getSettingsHtml()
     {
-        return Craft::$app->getView()->renderTemplate('amazonses/settings', [
+        return Craft::$app->getView()->renderTemplate('amazon-ses/settings', [
             'adapter' => $this
         ]);
     }
@@ -131,21 +115,17 @@ class AmazonSesAdapter extends BaseTransportAdapter
      */
     public function defineTransport()
     {
-        $guzzleClient = Craft::createGuzzleClient();
-        $client = new Client($guzzleClient);
-        $httpClientConfigurator = (new HttpClientConfigurator())
-            ->setHttpClient($client)
-            ->setApiKey($this->apiKey);
-
-        return [
-            'class' => AmazonSesTransport::class,
-            'constructArgs' => [
-                [
-                    'class' => Swift_Events_SimpleEventDispatcher::class
-                ],
-                AmazonSes::configure($httpClientConfigurator),
-                $this->domain,
+        // Create new client
+        $client = new SesClient([
+            'version' => $this->_version,
+            'debug' => $this->_debug,
+            'region'  => $this->region,
+            'credentials' => [
+                'key' => $this->apiKey,
+                'secret' => $this->apiSecret,
             ],
-        ];
+        ]);
+
+        return new AmazonSesTransport($client);
     }
 }
