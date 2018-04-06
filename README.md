@@ -1,6 +1,6 @@
 # Amazon SES for Craft CMS
 
-This plugin provides an [Amazon SES (Simple Email Service)](https://aws.amazon.com/ses/) mailer adapter for [Craft CMS](https://craftcms.com/).
+The Amazon SES plugin provides an [Amazon SES (Simple Email Service)](https://aws.amazon.com/ses/) mailer adapter for [Craft CMS](https://craftcms.com/).
 
 ## Requirements
 
