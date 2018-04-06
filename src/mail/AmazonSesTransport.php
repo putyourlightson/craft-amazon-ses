@@ -19,23 +19,9 @@ use Swift_Mime_SimpleMessage;
 
 class AmazonSesTransport extends Transport
 {
-    // Properties
-    // =========================================================================
-
-    /**
-     * @var SesClient
-     */
-    private $_ses;
-
     // Public Methods
     // =========================================================================
 
-    public function init()
-    {
-        parent::init();
-
-        $
-    }
     /**
      * @inheritdoc
      */

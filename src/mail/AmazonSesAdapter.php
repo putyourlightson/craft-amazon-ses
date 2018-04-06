@@ -33,18 +33,62 @@ class AmazonSesAdapter extends BaseTransportAdapter
         return 'Amazon SES';
     }
 
+    /**
+     * Returns the region options
+     *
+     * @return array
+     */
+    public static function getRegionOptions(): array
+    {
+        return [
+            'us-east-1' => 'US East (N. Virginia)',
+            'us-west-2' => 'US West (Oregon)',
+            'eu-west-1' => 'EU West (Ireland)',
+        ];
+    }
+
     // Properties
     // =========================================================================
 
     /**
-     * @var string The domain
+     * @var string The AWS region to use
      */
-    public $domain;
+    public $region;
 
     /**
-     * @var string The API key that should be used
+     * @var string The API key
      */
     public $apiKey;
+
+    /**
+     * @var string The API secret
+     */
+    public $apiSecret;
+
+    /**
+     * @var int The send rate to use
+     */
+    public $sendRate = 1;
+
+    /**
+     * @var int The timeout duration (in seconds)
+     */
+    public $timeout = 10;
+
+    /**
+     * @var string The SES API version to use
+     */
+    private $_version = 'latest';
+
+    /**
+     * @var bool Debug mode
+     */
+    private $_debug = false;
+
+    /**
+     * @var SesClient|null
+     */
+    private $_client;
 
     // Public Methods
     // =========================================================================
@@ -66,7 +110,9 @@ class AmazonSesAdapter extends BaseTransportAdapter
     public function rules(): array
     {
         return [
-            [['apiKey', 'domain'], 'required'],
+            [['region', 'apiKey', 'apiSecret', 'sendRate', 'timeout'], 'required'],
+            [['region'], 'in', 'range' => array_keys($this->getRegionOptions())],
+            [['sendRate', 'timeout'], 'number', 'integerOnly' => true],
         ];
     }
 
