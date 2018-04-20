@@ -47,7 +47,7 @@ class AmazonSesTransport extends Transport
         $data = $this->_formatMessage($message);
 
         try {
-            $this->_client->sendEmail($data);
+            $this->_client->sendRawEmail($data);
         }
         catch (AwsException $e) {
             return 0;
@@ -68,42 +68,18 @@ class AmazonSesTransport extends Transport
         // Get from as string
         $from = is_array($message->getFrom()) ? key($message->getFrom()) : $message->getFrom();
 
-        // Get charset as string
-        $charset = $message->getCharset() ?? '';
-
-        // Get html and text body
-        $htmlBody = '';
-        $textBody = '';
-
-        foreach ($message->getChildren() as $entity) {
-            if ($entity->getContentType() == 'text/html') {
-                $htmlBody = $entity->getBody();
-            }
-            if ($entity->getContentType() == 'text/plain') {
-                $textBody = $entity->getBody();
-            }
-        }
-
         $data = [
             'Source' => $from,
             'ReturnPath' => $from,
-            'Destination' => ['ToAddresses' => array_keys($message->getTo())],
-            'Message' =>
-                ['Body' => [
-                    'Html' => [
-                        'Charset' => $charset,
-                        'Data' => $htmlBody,
-                    ],
-                    'Text' => [
-                        'Charset' => $charset,
-                        'Data' => $textBody,
-                    ],
-                ],
-                    'Subject' => [
-                        'Charset' => $charset,
-                        'Data' => $message->getSubject(),
-                    ],
-                ],
+            'ReplyToAddresses' => is_array($message->getReplyTo()) ? array_keys($message->getReplyTo()) : $from,
+            'Destination' => [
+                'ToAddresses' => array_keys($message->getTo()),
+                'CcAddresses' => is_array($message->getCc()) ? array_keys($message->getCc()) : [],
+                'BccAddresses' => is_array($message->getBcc()) ? array_keys($message->getBcc()) : [],
+            ],
+            'RawMessage' => [
+                'Data' => $message->toString()
+            ],
         ];
 
         return $data;
