@@ -1,10 +1,12 @@
-# Amazon SES for Craft CMS
+<p align="center"><img width="200" src="src/icon.svg"></p>
 
-The Amazon SES plugin provides an [Amazon SES (Simple Email Service)](https://aws.amazon.com/ses/) mailer adapter for [Craft CMS](https://craftcms.com/).
+# Amazon SES Plugin for Craft CMS 3
+
+The Amazon SES plugin provides an [Amazon SES](https://aws.amazon.com/ses/) (Simple Email Service) mailer adapter for [Craft CMS](https://craftcms.com/).
 
 ## Requirements
 
-This plugin requires Craft CMS 3.0.1 or later.
+Craft CMS 3.0.0 or later.
 
 
 ## Installation
