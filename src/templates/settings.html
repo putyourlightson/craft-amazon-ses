@@ -8,7 +8,7 @@
     value: adapter.region,
     errors: adapter.getErrors('region'),
     required: true,
-    first: true
+    first: true,
 }) }}
 
 {{ forms.textField({
@@ -17,7 +17,6 @@
     name: 'apiKey',
     value: adapter.apiKey,
     errors: adapter.getErrors('apiKey'),
-    required: true
 }) }}
 
 {{ forms.passwordField({
@@ -26,5 +25,4 @@
     name: 'apiSecret',
     value: adapter.apiSecret,
     errors: adapter.getErrors('apiSecret'),
-    required: true
 }) }}

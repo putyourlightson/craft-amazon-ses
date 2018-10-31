@@ -95,7 +95,7 @@ class AmazonSesAdapter extends BaseTransportAdapter
     public function rules(): array
     {
         return [
-            [['region', 'apiKey', 'apiSecret'], 'required'],
+            [['region'], 'required'],
             [['region'], 'in', 'range' => array_keys($this->getRegionOptions())],
         ];
     }
