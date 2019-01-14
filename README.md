@@ -6,7 +6,7 @@ The Amazon SES plugin provides an [Amazon SES](https://aws.amazon.com/ses/) (Sim
 
 ## Requirements
 
-Craft CMS 3.0.0 or later.
+Craft CMS 3.1.0 or later.
 
 
 ## Installation
