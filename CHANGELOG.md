@@ -1,6 +1,6 @@
 # Amazon SES Changelog
 
-## 2.0.0 - 2019-01-14
+## 1.1.0 - 2019-01-14
 ### Added
 - Added support for environmental settings in Craft 3.1 ([#4](https://github.com/putyourlightson/craft-amazon-ses/issues/4)).
 
