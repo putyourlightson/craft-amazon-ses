@@ -1,10 +1,10 @@
 # Amazon SES Changelog
 
-## 1.0.2 -  2018-10-31
+## 1.0.2 - 2018-10-31
 ### Changed
 - Changed API key and API secret to not be required fields ([#3](https://github.com/putyourlightson/craft-amazon-ses/issues/3))
 
-## 1.0.1 -  2018-04-20
+## 1.0.1 - 2018-04-20
 ### Added
 - Added reply to addresses and ability to send attachments (credit to Johan Strömqvist)
 

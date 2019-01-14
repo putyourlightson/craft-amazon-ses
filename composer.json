@@ -29,7 +29,7 @@
         "name": "Amazon SES",
         "handle": "amazon-ses",
         "developer": "PutYourLightsOn",
-        "developerUrl": "https://www.putyourlightson.net/",
+        "developerUrl": "https://putyourlightson.com/",
         "schemaVersion": "1.0.0",
         "changelogUrl": "https://raw.githubusercontent.com/putyourlightson/craft-amazon-ses/v1/CHANGELOG.md",
         "class": "putyourlightson\\amazonses\\AmazonSes"
