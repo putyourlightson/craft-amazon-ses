@@ -1,7 +1,7 @@
 {
     "name": "putyourlightson/craft-amazon-ses",
     "description": "Amazon SES mailer adapter for Craft CMS.",
-    "version": "1.0.2",
+    "version": "2.0.0",
     "type": "craft-plugin",
     "homepage": "https://github.com/putyourlightson/craft-amazon-ses",
     "license": "MIT",
@@ -12,7 +12,7 @@
         "email"
     ],
     "require": {
-        "craftcms/cms": "^3.0.1",
+        "craftcms/cms": "^3.1.0-beta.7",
         "aws/aws-sdk-php": "^3.0.0"
     },
     "autoload": {

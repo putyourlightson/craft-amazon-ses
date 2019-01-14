@@ -7,6 +7,7 @@
 namespace putyourlightson\amazonses\mail;
 
 use Craft;
+use craft\behaviors\EnvAttributeParserBehavior;
 use craft\mail\transportadapters\BaseTransportAdapter;
 use Aws\Ses\SesClient;
 
@@ -22,6 +23,12 @@ use Aws\Ses\SesClient;
 
 class AmazonSesAdapter extends BaseTransportAdapter
 {
+    const REGIONS = [
+        'us-east-1',
+        'us-west-2',
+        'eu-west-1',
+    ];
+    
     // Static
     // =========================================================================
 
@@ -31,20 +38,6 @@ class AmazonSesAdapter extends BaseTransportAdapter
     public static function displayName(): string
     {
         return 'Amazon SES';
-    }
-
-    /**
-     * Returns the region options
-     *
-     * @return array
-     */
-    public static function getRegionOptions(): array
-    {
-        return [
-            'us-east-1' => 'US East (N. Virginia)',
-            'us-west-2' => 'US West (Oregon)',
-            'eu-west-1' => 'EU West (Ireland)',
-        ];
     }
 
     // Properties
@@ -92,11 +85,26 @@ class AmazonSesAdapter extends BaseTransportAdapter
     /**
      * @inheritdoc
      */
+    public function behaviors()
+    {
+        return [
+            'parser' => [
+                'class' => EnvAttributeParserBehavior::class,
+                'attributes' => ['region', 'apiKey', 'apiSecret'],
+            ],
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function rules(): array
     {
         return [
             [['region'], 'required'],
-            [['region'], 'in', 'range' => array_keys($this->getRegionOptions())],
+            [['region'], 'in', 'range' => self::REGIONS, 'message' => Craft::t('amazon-ses',
+                'The region provided is not a valid AWS region.'
+            )],
         ];
     }
 
@@ -105,8 +113,9 @@ class AmazonSesAdapter extends BaseTransportAdapter
      */
     public function getSettingsHtml()
     {
-        return Craft::$app->getView()->renderTemplate('amazon-ses/settings', [
-            'adapter' => $this
+        return Craft::$app->getView()->renderTemplate('amazon-ses/_settings', [
+            'adapter' => $this,
+            'regions' => self::REGIONS,
         ]);
     }
 
@@ -119,10 +128,10 @@ class AmazonSesAdapter extends BaseTransportAdapter
         $client = new SesClient([
             'version' => $this->_version,
             'debug' => $this->_debug,
-            'region'  => $this->region,
+            'region'  => Craft::parseEnv($this->region),
             'credentials' => [
-                'key' => $this->apiKey,
-                'secret' => $this->apiSecret,
+                'key' => Craft::parseEnv($this->apiKey),
+                'secret' => Craft::parseEnv($this->apiSecret),
             ],
         ]);
 

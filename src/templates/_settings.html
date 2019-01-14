@@ -1,0 +1,31 @@
+{% import "_includes/forms" as forms %}
+
+{{ forms.autosuggestField({
+    label: "Region"|t('amazon-ses'),
+    id: 'region',
+    name: 'region',
+    instructions: "A valid AWS region (`{regions}`)."|t('amazon-ses', {regions: regions|join(', ')}),
+    suggestions: craft.cp.getEnvSuggestions(),
+    value: adapter.region,
+    errors: adapter.getErrors('region'),
+    required: true,
+    first: true,
+}) }}
+
+{{ forms.autosuggestField({
+    label: "API Key"|t('amazon-ses'),
+    id: 'apiKey',
+    name: 'apiKey',
+    suggestions: craft.cp.getEnvSuggestions(),
+    value: adapter.apiKey,
+    errors: adapter.getErrors('apiKey'),
+}) }}
+
+{{ forms.autosuggestField({
+    label: "API Secret"|t('amazon-ses'),
+    id: 'apiSecret',
+    name: 'apiSecret',
+    suggestions: craft.cp.getEnvSuggestions(),
+    value: adapter.apiSecret,
+    errors: adapter.getErrors('apiSecret'),
+}) }}
