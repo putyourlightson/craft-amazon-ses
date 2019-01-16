@@ -11,11 +11,11 @@ Craft CMS 3.1.0 or later.
 
 ## Installation
 
-To install the plugin, search for "Amazon SES" in the Craft Plugin Store, or install manually using composer.
+To install the plugin, search for “Amazon SES” in the Craft Plugin Store, or install manually using composer.
 
         composer require putyourlightson/craft-amazon-ses
 
-## Setup
+## Usage
 
 Once installed, go to Settings → Email, and change the “Transport Type” setting to “Amazon SES”. Enter your region and credentials (which you can get from your [AWS Developer Console](https://console.aws.amazon.com/) page).
 
