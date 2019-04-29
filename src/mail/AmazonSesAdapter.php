@@ -77,8 +77,8 @@ class AmazonSesAdapter extends BaseTransportAdapter
     public function attributeLabels(): array
     {
         return [
-            'apiKey' => 'API Key',
-            'apiSecret' => 'API Secret',
+            'apiKey' => Craft::t('amazon-ses', 'API Key'),
+            'apiSecret' => Craft::t('amazon-ses', 'API Secret'),
         ];
     }
 

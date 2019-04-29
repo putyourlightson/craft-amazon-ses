@@ -2,7 +2,7 @@
 
 ## 1.1.0 - 2019-01-16
 ### Added
-- Added support for environmental settings in Craft 3.1 ([#4](https://github.com/putyourlightson/craft-amazon-ses/issues/4)).
+- Added support for environmental settings introduced in Craft 3.1 ([#4](https://github.com/putyourlightson/craft-amazon-ses/issues/4)).
 - Added translatable fields in settings.
 
 ## 1.0.2 - 2018-10-31
