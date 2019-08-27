@@ -1,5 +1,9 @@
 # Amazon SES Changelog
 
+## Unreleased
+### Fixed
+- Fixed support for proper default credential chain provider handling, when the key and secret aren't present.
+
 ## 1.1.0 - 2019-01-16
 ### Added
 - Added support for environmental settings introduced in Craft 3.1 ([#4](https://github.com/putyourlightson/craft-amazon-ses/issues/4)).

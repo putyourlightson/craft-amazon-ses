@@ -6,10 +6,10 @@
 
 namespace putyourlightson\amazonses\mail;
 
+use Aws\Ses\SesClient;
 use Craft;
 use craft\behaviors\EnvAttributeParserBehavior;
 use craft\mail\transportadapters\BaseTransportAdapter;
-use Aws\Ses\SesClient;
 
 /**
  * Amazon SES Adapter
@@ -20,7 +20,6 @@ use Aws\Ses\SesClient;
  *
  * @property mixed $settingsHtml
  */
-
 class AmazonSesAdapter extends BaseTransportAdapter
 {
     const REGIONS = [
@@ -28,7 +27,7 @@ class AmazonSesAdapter extends BaseTransportAdapter
         'us-west-2',
         'eu-west-1',
     ];
-    
+
     // Static
     // =========================================================================
 
@@ -124,16 +123,26 @@ class AmazonSesAdapter extends BaseTransportAdapter
      */
     public function defineTransport()
     {
-        // Create new client
-        $client = new SesClient([
+        $config = [
             'version' => $this->_version,
             'debug' => $this->_debug,
-            'region'  => Craft::parseEnv($this->region),
-            'credentials' => [
-                'key' => Craft::parseEnv($this->apiKey),
-                'secret' => Craft::parseEnv($this->apiSecret),
-            ],
-        ]);
+            'region' => Craft::parseEnv($this->region),
+        ];
+        $apiKey = Craft::parseEnv($this->apiKey);
+        $apiSecret = Craft::parseEnv($this->apiSecret);
+
+        // Only add the key and secret if they are found.
+        // Otherwise, use the default credential provider chain.
+        // Ref: https://docs.aws.amazon.com/sdk-for-php/v3/developer-guide/guide_credentials.html
+        if ($apiKey && $apiSecret) {
+            $config['credentials'] = [
+                'key' => $apiKey,
+                'secret' => $apiSecret,
+            ];
+        }
+
+        // Create new client
+        $client = new SesClient($config);
 
         return new AmazonSesTransport($client);
     }
