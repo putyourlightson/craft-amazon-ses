@@ -6,7 +6,9 @@
 
 namespace putyourlightson\amazonses\mail;
 
+use Aws\Exception\AwsException;
 use Aws\Ses\SesClient;
+use Swift_Mime_SimpleMessage;
 
 /**
  * Amazon SES Transport
@@ -26,6 +28,11 @@ class AmazonSesTransport extends Transport
      */
     private $_client;
 
+    /**
+     * @var string
+     */
+    private $_configurationSet;
+
     // Public Methods
     // =========================================================================
 
@@ -33,16 +40,18 @@ class AmazonSesTransport extends Transport
      * Constructor
      *
      * @param SesClient $client
+     * @param string $configurationSet
      */
-    public function __construct(SesClient $client)
+    public function __construct(SesClient $client, string $configurationSet)
     {
         $this->_client = $client;
+        $this->_configurationSet = $configurationSet;
     }
 
     /**
      * @inheritdoc
      */
-    public function send(\Swift_Mime_SimpleMessage $message, &$failedRecipients = null): int
+    public function send(Swift_Mime_SimpleMessage $message, &$failedRecipients = null): int
     {
         $data = $this->_formatMessage($message);
 
@@ -60,10 +69,10 @@ class AmazonSesTransport extends Transport
     // =========================================================================
 
     /**
-     * @param \Swift_Mime_SimpleMessage $message
+     * @param Swift_Mime_SimpleMessage $message
      * @return array
      */
-    private function _formatMessage(\Swift_Mime_SimpleMessage $message): array
+    private function _formatMessage(Swift_Mime_SimpleMessage $message): array
     {
         // Get from as string
         $from = is_array($message->getFrom()) ? key($message->getFrom()) : $message->getFrom();
@@ -81,6 +90,10 @@ class AmazonSesTransport extends Transport
                 'Data' => $message->toString()
             ],
         ];
+
+        if ($this->_configurationSet) {
+            $data['ConfigurationSetName'] = $this->_configurationSet;
+        }
 
         return $data;
     }

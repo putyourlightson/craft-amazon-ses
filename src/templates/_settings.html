@@ -17,6 +17,7 @@
     label: "API Key"|t('amazon-ses'),
     id: 'apiKey',
     name: 'apiKey',
+    instructions: "Leave this blank to use the default credential provider chain. {link}"|t('amazon-ses', {link: '<a href="https://docs.aws.amazon.com/sdk-for-php/v3/developer-guide/guide_credentials.html" class="go" target="blank">Docs</a>'}),
     suggestEnvVars: true,
     suggestions: craft.cp.getEnvSuggestions(),
     value: adapter.apiKey,
@@ -27,8 +28,20 @@
     label: "API Secret"|t('amazon-ses'),
     id: 'apiSecret',
     name: 'apiSecret',
+    instructions: "Leave this blank to use the default credential provider chain. {link}"|t('amazon-ses', {link: '<a href="https://docs.aws.amazon.com/sdk-for-php/v3/developer-guide/guide_credentials.html" class="go" target="blank">Docs</a>'}),
     suggestEnvVars: true,
     suggestions: craft.cp.getEnvSuggestions(),
     value: adapter.apiSecret,
     errors: adapter.getErrors('apiSecret'),
+}) }}
+
+{{ forms.autosuggestField({
+    label: "Configuration Set"|t('amazon-ses'),
+    id: 'configurationSet',
+    name: 'configurationSet',
+    instructions: "A configuration set can allow you to be notified when an email bounces or some other action happens. {link}"|t('amazon-ses', {link: '<a href="https://docs.aws.amazon.com/ses/latest/DeveloperGuide/using-configuration-sets.html" class="go" target="blank">Docs</a>'}),
+    suggestEnvVars: true,
+    suggestions: craft.cp.getEnvSuggestions(),
+    value: adapter.configurationSet,
+    errors: adapter.getErrors('configurationSet'),
 }) }}

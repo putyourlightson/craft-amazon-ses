@@ -7,7 +7,7 @@
 namespace putyourlightson\amazonses\mail;
 
 use Swift_Events_EventListener;
-use Swift_Mime_SimpleMessage;
+use Swift_Transport;
 
 /**
  * Transport
@@ -17,7 +17,7 @@ use Swift_Mime_SimpleMessage;
  * @since     1.0.0
  */
 
-abstract class Transport implements \Swift_Transport
+abstract class Transport implements Swift_Transport
 {
     /**
      * @inheritdoc

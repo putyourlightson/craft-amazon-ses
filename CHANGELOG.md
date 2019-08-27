@@ -1,8 +1,11 @@
 # Amazon SES Changelog
 
-## Unreleased
+## 1.2.0 - 2019-08-27
+### Added
+- Added a configuration set field to the plugin settings ([#5](https://github.com/putyourlightson/craft-amazon-ses/issues/5)).
+
 ### Fixed
-- Fixed support for proper default credential chain provider handling, when the key and secret aren't present.
+- Fixed support for default credential chain handling when the API key and secret are left blank ([#6](https://github.com/putyourlightson/craft-amazon-ses/pull/6)).
 
 ## 1.1.0 - 2019-01-16
 ### Added

@@ -58,6 +58,11 @@ class AmazonSesAdapter extends BaseTransportAdapter
     public $apiSecret;
 
     /**
+     * @var string Configuration set
+     */
+    public $configurationSet;
+
+    /**
      * @var string The SES API version to use
      */
     private $_version = 'latest';
@@ -89,7 +94,7 @@ class AmazonSesAdapter extends BaseTransportAdapter
         return [
             'parser' => [
                 'class' => EnvAttributeParserBehavior::class,
-                'attributes' => ['region', 'apiKey', 'apiSecret'],
+                'attributes' => ['region', 'apiKey', 'apiSecret', 'configurationSet'],
             ],
         ];
     }
@@ -128,12 +133,12 @@ class AmazonSesAdapter extends BaseTransportAdapter
             'debug' => $this->_debug,
             'region' => Craft::parseEnv($this->region),
         ];
+
         $apiKey = Craft::parseEnv($this->apiKey);
         $apiSecret = Craft::parseEnv($this->apiSecret);
 
-        // Only add the key and secret if they are found.
-        // Otherwise, use the default credential provider chain.
-        // Ref: https://docs.aws.amazon.com/sdk-for-php/v3/developer-guide/guide_credentials.html
+        // Only add the key and secret if they are found, otherwise use the default credential provider chain.
+        // https://docs.aws.amazon.com/sdk-for-php/v3/developer-guide/guide_credentials.html
         if ($apiKey && $apiSecret) {
             $config['credentials'] = [
                 'key' => $apiKey,
@@ -144,6 +149,6 @@ class AmazonSesAdapter extends BaseTransportAdapter
         // Create new client
         $client = new SesClient($config);
 
-        return new AmazonSesTransport($client);
+        return new AmazonSesTransport($client, $this->configurationSet);
     }
 }
