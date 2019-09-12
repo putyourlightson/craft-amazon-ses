@@ -6,7 +6,7 @@ The Amazon SES plugin provides an [Amazon SES](https://aws.amazon.com/ses/) (Sim
 
 ## Documentation
 
-Read the documentation at [putyourlightson.com/plugins/amazon-ses »
+Learn more and read the documentation at [putyourlightson.com/plugins/amazon-ses »
 ](https://putyourlightson.com/plugins/amazon-ses)
 
 ## License
