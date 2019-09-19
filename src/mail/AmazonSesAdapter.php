@@ -60,7 +60,7 @@ class AmazonSesAdapter extends BaseTransportAdapter
     /**
      * @var string Configuration set
      */
-    public $configurationSet;
+    public $configurationSet = '';
 
     /**
      * @var string The SES API version to use

@@ -1,5 +1,9 @@
 # Amazon SES Changelog
 
+## 1.2.1 - 2019-09-19
+### Fixed
+- Fixed bug with empty configuration set value. 
+
 ## 1.2.0 - 2019-08-27
 ### Added
 - Added a configuration set field to the plugin settings ([#5](https://github.com/putyourlightson/craft-amazon-ses/issues/5)).
