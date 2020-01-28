@@ -1,5 +1,9 @@
 # Amazon SES Changelog
 
+## 1.3.0 - 2020-01-28
+### Added
+- Added `ap-south-1`, `ap-southeast-2` and `eu-central-1` as valid [service endpoint regions](https://docs.aws.amazon.com/general/latest/gr/ses.html) ([#7](https://github.com/putyourlightson/craft-amazon-ses/issues/7)). 
+
 ## 1.2.1 - 2019-09-19
 ### Fixed
 - Fixed bug with empty configuration set value. 
