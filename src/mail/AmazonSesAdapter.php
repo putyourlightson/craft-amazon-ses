@@ -26,9 +26,13 @@ class AmazonSesAdapter extends BaseTransportAdapter
         'us-east-1',
         'us-west-2',
         'ap-south-1',
+        'ca-central-1',
         'ap-southeast-2',
         'eu-central-1',
         'eu-west-1',
+        'eu-west-2',
+        'sa-east-1',
+        'us-gov-west-1'
     ];
 
     // Static
