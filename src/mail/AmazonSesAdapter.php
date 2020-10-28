@@ -22,9 +22,10 @@ use craft\mail\transportadapters\BaseTransportAdapter;
  */
 class AmazonSesAdapter extends BaseTransportAdapter
 {
+    // https://docs.aws.amazon.com/general/latest/gr/ses.html
     const REGIONS = [
-        'us-east-1',
         'us-east-2',
+        'us-east-1',
         'us-west-1',
         'us-west-2',
         'ap-south-1',
