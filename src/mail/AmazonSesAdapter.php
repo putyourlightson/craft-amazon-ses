@@ -24,6 +24,7 @@ class AmazonSesAdapter extends BaseTransportAdapter
 {
     const REGIONS = [
         'us-east-1',
+        'us-east-2',
         'us-west-2',
         'ap-south-1',
         'ca-central-1',
