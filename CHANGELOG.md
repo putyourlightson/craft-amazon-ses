@@ -1,5 +1,9 @@
 # Amazon SES Changelog
 
+## 1.3.2 - 2020-10-28
+### Added
+- Added `us-east-2`, `us-west-1`, `ap-northeast-2`, `ap-southeast-1`, `ap-northeast-1`, `eu-west-3` and `eu-north-1` as valid [service endpoint regions](https://docs.aws.amazon.com/general/latest/gr/ses.html) ([#11](https://github.com/putyourlightson/craft-amazon-ses/issues/11)). 
+
 ## 1.3.1 - 2020-06-19
 ### Added
 - Added `ca-central-1`, `eu-west-2`, `sa-east-1` and `us-gov-west-1` as valid [service endpoint regions](https://docs.aws.amazon.com/general/latest/gr/ses.html) ([#8](https://github.com/putyourlightson/craft-amazon-ses/issues/8)). 
