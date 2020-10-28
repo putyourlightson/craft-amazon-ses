@@ -22,6 +22,7 @@ use craft\mail\transportadapters\BaseTransportAdapter;
  */
 class AmazonSesAdapter extends BaseTransportAdapter
 {
+    // Available SES regions should be listed in same order as in the docs:
     // https://docs.aws.amazon.com/general/latest/gr/ses.html
     const REGIONS = [
         'us-east-2',
