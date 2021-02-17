@@ -1,5 +1,8 @@
 # Amazon SES Changelog
 
+## 1.3.3 - 2021-02-17
+- Fixed the configuration set value not being parsed for environment variables ([#12](https://github.com/putyourlightson/craft-amazon-ses/issues/12)). 
+
 ## 1.3.2 - 2020-10-28
 ### Added
 - Added `us-east-2`, `us-west-1`, `ap-northeast-2`, `ap-southeast-1`, `ap-northeast-1`, `eu-west-3` and `eu-north-1` as valid [service endpoint regions](https://docs.aws.amazon.com/general/latest/gr/ses.html) ([#11](https://github.com/putyourlightson/craft-amazon-ses/issues/11)). 

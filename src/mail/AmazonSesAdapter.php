@@ -165,6 +165,6 @@ class AmazonSesAdapter extends BaseTransportAdapter
         // Create new client
         $client = new SesClient($config);
 
-        return new AmazonSesTransport($client, $this->configurationSet);
+        return new AmazonSesTransport($client, Craft::parseEnv($this->configurationSet));
     }
 }
