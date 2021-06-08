@@ -1,6 +1,11 @@
 # Amazon SES Changelog
 
+## 1.3.4 - 2021-06-08
+### Changed
+- The send method now throws an exception so that the Craft mailer can catch and log the exception ([#13](https://github.com/putyourlightson/craft-amazon-ses/issues/13)). 
+
 ## 1.3.3 - 2021-02-17
+### Fixed
 - Fixed the configuration set value not being parsed for environment variables ([#12](https://github.com/putyourlightson/craft-amazon-ses/issues/12)). 
 
 ## 1.3.2 - 2020-10-28
