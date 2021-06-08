@@ -6,7 +6,6 @@
 
 namespace putyourlightson\amazonses\mail;
 
-use Aws\Exception\AwsException;
 use Aws\Ses\SesClient;
 use Swift_Mime_SimpleMessage;
 
@@ -55,12 +54,7 @@ class AmazonSesTransport extends Transport
     {
         $data = $this->_formatMessage($message);
 
-        try {
-            $this->_client->sendRawEmail($data);
-        }
-        catch (AwsException $e) {
-            return 0;
-        }
+        $this->_client->sendRawEmail($data);
 
         return count($message->getTo());
     }
