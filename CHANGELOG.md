@@ -1,5 +1,9 @@
 # Amazon SES Changelog
 
+## 2.0.0 - Unreleased
+### Added
+- Added compatibility with Craft 4.
+
 ## 1.3.4 - 2021-06-08
 ### Changed
 - The send method now throws an exception so that the Craft mailer can catch and log the exception ([#13](https://github.com/putyourlightson/craft-amazon-ses/issues/13)). 

@@ -1,30 +1,25 @@
 <?php
 /**
- * @link      https://github.com/putyourlightson/craft-amazon-ses
  * @copyright Copyright (c) PutYourLightsOn
  */
 
 namespace putyourlightson\amazonses\mail;
 
-use Aws\Ses\SesClient;
+use AsyncAws\Ses\SesClient;
 use Craft;
 use craft\behaviors\EnvAttributeParserBehavior;
+use craft\helpers\App;
 use craft\mail\transportadapters\BaseTransportAdapter;
+use Symfony\Component\Mailer\Transport\AbstractTransport;
 
 /**
- * Amazon SES Adapter
- *
- * @author    PutYourLightsOn
- * @package   Amazon SES
- * @since     1.0.0
- *
- * @property mixed $settingsHtml
+ * @property-read null|string $settingsHtml
  */
 class AmazonSesAdapter extends BaseTransportAdapter
 {
     // Available SES regions should be listed in same order as in the docs:
     // https://docs.aws.amazon.com/general/latest/gr/ses.html
-    const REGIONS = [
+    public const REGIONS = [
         'us-east-2',
         'us-east-1',
         'us-west-1',
@@ -44,9 +39,6 @@ class AmazonSesAdapter extends BaseTransportAdapter
         'us-gov-west-1'
     ];
 
-    // Static
-    // =========================================================================
-
     /**
      * @inheritdoc
      */
@@ -55,41 +47,35 @@ class AmazonSesAdapter extends BaseTransportAdapter
         return 'Amazon SES';
     }
 
-    // Properties
-    // =========================================================================
-
     /**
      * @var string The AWS region to use
      */
-    public $region;
+    public string $region;
 
     /**
      * @var string The API key
      */
-    public $apiKey;
+    public string $apiKey;
 
     /**
      * @var string The API secret
      */
-    public $apiSecret;
+    public string $apiSecret;
 
     /**
      * @var string Configuration set
      */
-    public $configurationSet = '';
+    public string $configurationSet = '';
 
     /**
      * @var string The SES API version to use
      */
-    private $_version = 'latest';
+    private string $_version = 'latest';
 
     /**
      * @var bool Debug mode
      */
-    private $_debug = false;
-
-    // Public Methods
-    // =========================================================================
+    private bool $_debug = false;
 
     /**
      * @inheritdoc
@@ -105,7 +91,7 @@ class AmazonSesAdapter extends BaseTransportAdapter
     /**
      * @inheritdoc
      */
-    public function behaviors()
+    public function behaviors(): array
     {
         return [
             'parser' => [
@@ -118,7 +104,7 @@ class AmazonSesAdapter extends BaseTransportAdapter
     /**
      * @inheritdoc
      */
-    public function rules(): array
+    public function defineRules(): array
     {
         return [
             [['region'], 'required'],
@@ -131,7 +117,7 @@ class AmazonSesAdapter extends BaseTransportAdapter
     /**
      * @inheritdoc
      */
-    public function getSettingsHtml()
+    public function getSettingsHtml(): ?string
     {
         return Craft::$app->getView()->renderTemplate('amazon-ses/_settings', [
             'adapter' => $this,
@@ -142,16 +128,16 @@ class AmazonSesAdapter extends BaseTransportAdapter
     /**
      * @inheritdoc
      */
-    public function defineTransport()
+    public function defineTransport(): array|AbstractTransport
     {
         $config = [
             'version' => $this->_version,
             'debug' => $this->_debug,
-            'region' => Craft::parseEnv($this->region),
+            'region' => App::parseEnv($this->region),
         ];
 
-        $apiKey = Craft::parseEnv($this->apiKey);
-        $apiSecret = Craft::parseEnv($this->apiSecret);
+        $apiKey = App::parseEnv($this->apiKey);
+        $apiSecret = App::parseEnv($this->apiSecret);
 
         // Only add the key and secret if they are found, otherwise use the default credential provider chain.
         // https://docs.aws.amazon.com/sdk-for-php/v3/developer-guide/guide_credentials.html
@@ -165,6 +151,6 @@ class AmazonSesAdapter extends BaseTransportAdapter
         // Create new client
         $client = new SesClient($config);
 
-        return new AmazonSesTransport($client, Craft::parseEnv($this->configurationSet));
+        return new AmazonSesTransport($client, App::parseEnv($this->configurationSet));
     }
 }

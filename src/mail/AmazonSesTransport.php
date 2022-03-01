@@ -1,94 +1,46 @@
 <?php
 /**
- * @link      https://github.com/putyourlightson/craft-amazon-ses
  * @copyright Copyright (c) PutYourLightsOn
  */
 
 namespace putyourlightson\amazonses\mail;
 
-use Aws\Ses\SesClient;
-use Swift_Mime_SimpleMessage;
+use AsyncAws\Ses\Input\SendEmailRequest;
+use AsyncAws\Ses\SesClient;
+use Symfony\Component\Mailer\Bridge\Amazon\Transport\SesApiAsyncAwsTransport;
+use Symfony\Component\Mailer\SentMessage;
+use Symfony\Component\Mime\Message;
 
-/**
- * Amazon SES Transport
- *
- * @author    PutYourLightsOn
- * @package   Amazon SES
- * @since     1.0.0
- */
-
-class AmazonSesTransport extends Transport
+class AmazonSesTransport extends SesApiAsyncAwsTransport
 {
-    // Properties
-    // =========================================================================
-
     /**
-     * @var SesClient
+     * @var string The configuration set to use when sending.
      */
-    private $_client;
+    private string $_configurationSet;
 
     /**
-     * @var string
-     */
-    private $_configurationSet;
-
-    // Public Methods
-    // =========================================================================
-
-    /**
-     * Constructor
-     *
-     * @param SesClient $client
-     * @param string $configurationSet
+     * Override the method, so we can store the configuration set.
      */
     public function __construct(SesClient $client, string $configurationSet)
     {
-        $this->_client = $client;
+        parent::__construct($client);
+
         $this->_configurationSet = $configurationSet;
     }
 
     /**
-     * @inheritdoc
+     * Override the method, so we can add the configuration set header.
      */
-    public function send(Swift_Mime_SimpleMessage $message, &$failedRecipients = null): int
+    protected function getRequest(SentMessage $message): SendEmailRequest
     {
-        $data = $this->_formatMessage($message);
-
-        $this->_client->sendRawEmail($data);
-
-        return count($message->getTo());
-    }
-
-    // Private Methods
-    // =========================================================================
-
-    /**
-     * @param Swift_Mime_SimpleMessage $message
-     * @return array
-     */
-    private function _formatMessage(Swift_Mime_SimpleMessage $message): array
-    {
-        // Get from as string
-        $from = is_array($message->getFrom()) ? key($message->getFrom()) : $message->getFrom();
-
-        $data = [
-            'Source' => $from,
-            'ReturnPath' => $from,
-            'ReplyToAddresses' => is_array($message->getReplyTo()) ? array_keys($message->getReplyTo()) : $from,
-            'Destination' => [
-                'ToAddresses' => array_keys($message->getTo()),
-                'CcAddresses' => is_array($message->getCc()) ? array_keys($message->getCc()) : [],
-                'BccAddresses' => is_array($message->getBcc()) ? array_keys($message->getBcc()) : [],
-            ],
-            'RawMessage' => [
-                'Data' => $message->toString()
-            ],
-        ];
-
         if ($this->_configurationSet) {
-            $data['ConfigurationSetName'] = $this->_configurationSet;
+            $originalMessage = $message->getOriginalMessage();
+
+            if ($originalMessage instanceof Message) {
+                $originalMessage->getHeaders()->addTextHeader('X-SES-CONFIGURATION-SET', $this->_configurationSet);
+            }
         }
 
-        return $data;
+        return parent::getRequest($message);
     }
 }

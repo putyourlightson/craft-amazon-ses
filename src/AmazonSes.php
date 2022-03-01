@@ -1,6 +1,5 @@
 <?php
 /**
- * @link      https://github.com/putyourlightson/craft-amazon-ses
  * @copyright Copyright (c) PutYourLightsOn
  */
 
@@ -13,22 +12,12 @@ use craft\events\RegisterComponentTypesEvent;
 use craft\helpers\MailerHelper;
 use yii\base\Event;
 
-/**
- * Amazon SES plugin
- *
- * @author    PutYourLightsOn
- * @package   Amazon SES
- * @since     1.0.0
- */
 class AmazonSes extends Plugin
 {
     /**
      * @var AmazonSes
      */
-    public static $plugin;
-
-    // Public Methods
-    // =========================================================================
+    public static AmazonSes $plugin;
 
     /**
      * @inheritdoc
