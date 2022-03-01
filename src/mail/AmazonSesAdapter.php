@@ -50,17 +50,17 @@ class AmazonSesAdapter extends BaseTransportAdapter
     /**
      * @var string The AWS region to use
      */
-    public string $region;
+    public string $region = '';
 
     /**
      * @var string The API key
      */
-    public string $apiKey;
+    public string $apiKey = '';
 
     /**
      * @var string The API secret
      */
-    public string $apiSecret;
+    public string $apiSecret = '';
 
     /**
      * @var string Configuration set

@@ -1,10 +1,13 @@
 {% import "_includes/forms" as forms %}
 
+{% set info %}
+    <span class="info">{{ "Valid regions: `{regions}`"|t('amazon-ses', {regions: regions|join(', ')}) }}</span>
+{% endset %}
 {{ forms.autosuggestField({
     label: "Region"|t('amazon-ses'),
     id: 'region',
     name: 'region',
-    instructions: "A valid AWS region (`{regions}`)."|t('amazon-ses', {regions: regions|join(', ')}),
+    instructions: "A valid AWS region."|t('amazon-ses') ~ info,
     suggestEnvVars: true,
     suggestions: craft.cp.getEnvSuggestions(),
     value: adapter.region,
