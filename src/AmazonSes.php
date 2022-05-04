@@ -5,11 +5,10 @@
 
 namespace putyourlightson\amazonses;
 
-use putyourlightson\amazonses\mail\AmazonSesAdapter;
-
 use craft\base\Plugin;
 use craft\events\RegisterComponentTypesEvent;
 use craft\helpers\MailerHelper;
+use putyourlightson\amazonses\mail\AmazonSesAdapter;
 use yii\base\Event;
 
 class AmazonSes extends Plugin
@@ -25,7 +24,6 @@ class AmazonSes extends Plugin
     public function init()
     {
         parent::init();
-
         self::$plugin = $this;
 
         Event::on(MailerHelper::class, MailerHelper::EVENT_REGISTER_MAILER_TRANSPORT_TYPES,

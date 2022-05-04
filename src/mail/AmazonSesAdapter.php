@@ -36,7 +36,7 @@ class AmazonSesAdapter extends BaseTransportAdapter
         'eu-west-3',
         'eu-north-1',
         'sa-east-1',
-        'us-gov-west-1'
+        'us-gov-west-1',
     ];
 
     /**
@@ -91,32 +91,6 @@ class AmazonSesAdapter extends BaseTransportAdapter
     /**
      * @inheritdoc
      */
-    public function behaviors(): array
-    {
-        return [
-            'parser' => [
-                'class' => EnvAttributeParserBehavior::class,
-                'attributes' => ['region', 'apiKey', 'apiSecret', 'configurationSet'],
-            ],
-        ];
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function defineRules(): array
-    {
-        return [
-            [['region'], 'required'],
-            [['region'], 'in', 'range' => self::REGIONS, 'message' => Craft::t('amazon-ses',
-                'The region provided is not a valid AWS region.'
-            )],
-        ];
-    }
-
-    /**
-     * @inheritdoc
-     */
     public function getSettingsHtml(): ?string
     {
         return Craft::$app->getView()->renderTemplate('amazon-ses/_settings', [
@@ -152,5 +126,31 @@ class AmazonSesAdapter extends BaseTransportAdapter
         $client = new SesClient($config);
 
         return new AmazonSesTransport($client, App::parseEnv($this->configurationSet));
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function defineBehaviors(): array
+    {
+        return [
+            'parser' => [
+                'class' => EnvAttributeParserBehavior::class,
+                'attributes' => ['region', 'apiKey', 'apiSecret', 'configurationSet'],
+            ],
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function defineRules(): array
+    {
+        return [
+            [['region'], 'required'],
+            [['region'], 'in', 'range' => self::REGIONS, 'message' => Craft::t('amazon-ses',
+                'The region provided is not a valid AWS region.'
+            )],
+        ];
     }
 }
