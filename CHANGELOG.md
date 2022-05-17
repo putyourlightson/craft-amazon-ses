@@ -1,5 +1,9 @@
 # Release Notes for Amazon SES
 
+## 2.0.1 - 2022-05-17
+### Fixed
+- Fixed invalid configuration options ([#14](https://github.com/putyourlightson/craft-sendgrid/issues/14)).
+
 ## 2.0.0 - 2022-05-04
 ### Added
 - Added compatibility with Craft 4.

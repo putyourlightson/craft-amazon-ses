@@ -68,11 +68,6 @@ class AmazonSesAdapter extends BaseTransportAdapter
     public string $configurationSet = '';
 
     /**
-     * @var string The SES API version to use
-     */
-    private string $_version = 'latest';
-
-    /**
      * @var bool Debug mode
      */
     private bool $_debug = false;
@@ -104,22 +99,21 @@ class AmazonSesAdapter extends BaseTransportAdapter
      */
     public function defineTransport(): array|AbstractTransport
     {
+        // https://async-aws.com/configuration.html#configuration-reference
         $config = [
-            'version' => $this->_version,
-            'debug' => $this->_debug,
             'region' => App::parseEnv($this->region),
+            'debug' => $this->_debug,
         ];
 
+        // Only add the key and secret if they are found, otherwise use the default credential provider chain.
+        // https://async-aws.com/authentication/environment.html
         $apiKey = App::parseEnv($this->apiKey);
         $apiSecret = App::parseEnv($this->apiSecret);
 
-        // Only add the key and secret if they are found, otherwise use the default credential provider chain.
-        // https://docs.aws.amazon.com/sdk-for-php/v3/developer-guide/guide_credentials.html
+        // Use credentials if provided, otherwise use the default credential provider chain.
         if ($apiKey && $apiSecret) {
-            $config['credentials'] = [
-                'key' => $apiKey,
-                'secret' => $apiSecret,
-            ];
+            $config['accessKeyId'] = $apiKey;
+            $config['accessKeySecret'] = $apiSecret;
         }
 
         // Create new client
