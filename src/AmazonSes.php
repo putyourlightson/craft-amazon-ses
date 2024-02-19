@@ -26,8 +26,8 @@ class AmazonSes extends Plugin
         parent::init();
         self::$plugin = $this;
 
-        Event::on(MailerHelper::class, MailerHelper::EVENT_REGISTER_MAILER_TRANSPORT_TYPES,
-            function (RegisterComponentTypesEvent $event) {
+        Event::on(MailerHelper::class, MailerHelper::EVENT_REGISTER_MAILER_TRANSPORTS,
+            function(RegisterComponentTypesEvent $event) {
                 $event->types[] = AmazonSesAdapter::class;
             }
         );
