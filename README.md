@@ -3,7 +3,7 @@
 
 <p align="center"><img width="200" src="src/icon.svg"></p>
 
-# Amazon SES Plugin for Craft CMS 3
+# Amazon SES Plugin for Craft CMS
 
 The Amazon SES plugin provides an [Amazon SES](https://aws.amazon.com/ses/) (Simple Email Service) mailer adapter for [Craft CMS](https://craftcms.com/).
 
