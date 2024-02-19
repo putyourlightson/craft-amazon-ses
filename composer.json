@@ -21,6 +21,20 @@
       "putyourlightson\\amazonses\\": "src/"
     }
   },
+  "scripts": {
+    "phpstan": "phpstan --ansi --memory-limit=1G",
+    "check-cs": "ecs check --ansi",
+    "fix-cs": "ecs check --fix --ansi"
+  },
+  "config": {
+    "allow-plugins": {
+      "craftcms/plugin-installer": true,
+      "pestphp/pest-plugin": true,
+      "yiisoft/yii2-composer": true
+    },
+    "optimize-autoloader": true,
+    "sort-packages": true
+  },
   "support": {
     "docs": "https://putyourlightson.com/plugins/amazon-ses",
     "source": "https://github.com/putyourlightson/craft-amazon-ses",
